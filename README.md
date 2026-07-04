@@ -397,9 +397,9 @@ Key advantages include:
 
 **Aditya Gour**
 
-GitHub: https://github.com/yourusername
+GitHub: [https://github.com/yourusername](https://github.com/adityawork365-commits)
 
-LinkedIn: https://linkedin.com/in/yourprofile
+LinkedIn: [https://linkedin.com/in/yourprofile](https://www.linkedin.com/in/aditya-gour-72ba47344?utm_source=share_via&utm_content=profile&utm_medium=member_android)
 
 ---
 
