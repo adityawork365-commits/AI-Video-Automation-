@@ -1,0 +1,413 @@
+{
+  "name": "Linkdine Copy+Past",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1344,
+        160
+      ],
+      "id": "702bde3e-9c9d-4108-a134-0639a1d93618",
+      "name": "START BUTTON"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "91fcb27e-276b-4958-9c60-63f8aee73063",
+              "name": "keyword",
+              "value": "Software Developer",
+              "type": "string"
+            },
+            {
+              "id": "18942a8e-8a52-4490-9433-06bb300b899f",
+              "name": "location",
+              "value": "India",
+              "type": "string"
+            },
+            {
+              "id": "8b767b82-e99e-4a93-a51c-fd72d7e1fb2c",
+              "name": "video_count",
+              "value": 2,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1168,
+        144
+      ],
+      "id": "3328c8c4-e993-4b45-8e25-0568f365b4ee",
+      "name": "Input Parameters"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "845dd489-309e-4bf1-b81f-14be7f0be317",
+              "name": "jobs",
+              "value": "=[\n  {\"title\": \"Frontend Developer\", \"company\": \"TCS\", \"location\": \"India\"},\n  {\"title\": \"Backend Developer\", \"company\": \"Infosys\", \"location\": \"India\"},\n  {\"title\": \"Full Stack Developer\", \"company\": \"Wipro\", \"location\": \"India\"}\n]",
+              "type": "string"
+            },
+            {
+              "id": "b7dedb84-e523-4faf-97e8-af527459a0ca",
+              "name": "jobs",
+              "value": "=[\n  {\"title\": \"Frontend Developer\", \"company\": \"TCS\", \"location\": \"India\"},\n  {\"title\": \"Backend Developer\", \"company\": \"Infosys\", \"location\": \"India\"},\n  {\"title\": \"Full Stack Developer\", \"company\": \"Wipro\", \"location\": \"India\"}\n]",
+              "type": "string"
+            },
+            {
+              "id": "f3de75ef-f32f-4fa8-b72a-d901b0725281",
+              "name": "jobs",
+              "value": "=[\n  {\"title\": \"Frontend Developer\", \"company\": \"TCS\", \"location\": \"India\"},\n  {\"title\": \"Backend Developer\", \"company\": \"Infosys\", \"location\": \"India\"},\n  {\"title\": \"Full Stack Developer\", \"company\": \"Wipro\", \"location\": \"India\"}\n]",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -944,
+        144
+      ],
+      "id": "2aa5cd5c-4599-4324-aadc-176698670e90",
+      "name": "Get Job Data"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1a69c823-115a-4bde-9343-822c198bd764",
+              "name": "script",
+              "value": "={{$json[\"company\"] + \" is hiring a \" + $json[\"title\"] + \" in \" + $json[\"location\"]}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        160
+      ],
+      "id": "3d4aedf4-8e6e-43d4-b328-a77128813c77",
+      "name": "Script Generator"
+    },
+    {
+      "parameters": {
+        "jsCode": "const jobs = JSON.parse($json.jobs);\n\nreturn jobs.map(job => {\n  return {\n    json: job\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -768,
+        272
+      ],
+      "id": "54df47bd-0d59-440d-a2ce-70e7196df9ff",
+      "name": "Convert Jobs"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2a55b673-7e19-447d-94ed-7fd72a665c6f",
+              "name": "title",
+              "value": "={{ 'Job Update' }}",
+              "type": "string"
+            },
+            {
+              "id": "cce7b7b7-e585-4322-b0a4-ca1c6530bf66",
+              "name": "description",
+              "value": "={{ $json.script }}",
+              "type": "string"
+            },
+            {
+              "id": "bdc70a5a-bae1-48bd-9a31-0efe096d0cdf",
+              "name": "tags",
+              "value": "jobs, hiring, career",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -320,
+        160
+      ],
+      "id": "7a56d192-3383-49ab-adb0-fbb851da05c0",
+      "name": "Prepare Video Data"
+    },
+    {
+      "parameters": {
+        "url": "=https://dummyimage.com/1280x720/000/fff&text={{ encodeURIComponent($json.description) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -32,
+        336
+      ],
+      "id": "de301c30-e86b-4ac7-9f0a-f7056ee76835",
+      "name": "Generate Image"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ 'image-' + $itemIndex + '.png' }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        320
+      ],
+      "id": "44b4f06b-86e2-45bb-92cc-61b53209ba56",
+      "name": "Save Image"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0fb23026-a0be-4951-b259-b4ea54c02867",
+              "name": "video_status",
+              "value": "Video Generated Successfully",
+              "type": "string"
+            },
+            {
+              "id": "bce91e9c-8abd-4143-b881-f0502b919696",
+              "name": "frames_used",
+              "value": "={{ Number(3) }}",
+              "type": "number"
+            },
+            {
+              "id": "97804ed2-33b0-4cc7-a61f-207fb2b6c6b9",
+              "name": "note",
+              "value": "Images converted to video pipeline ready",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        512,
+        320
+      ],
+      "id": "f15f44f3-ebdf-4d70-8f89-4ec51d851ce2",
+      "name": "Final Video Output"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.creatomate.com/v1/renders/{{ $json.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        480,
+        0
+      ],
+      "id": "cd7e4f0e-8a69-41e9-bfb0-dd33897badcb",
+      "name": "Check Video Status",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "99qISZRIt2evfJok",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n// Har item se description nikalna\nlet jobs = items.map(item => item.json.description).filter(j => j !== null);\n\n// Agar jobs 4 se kam hain toh extra text add karna taaki error na aaye\nwhile (jobs.length < 4) {\n  jobs.push(\"Check JobAlertIndia for more updates!\");\n}\n\nreturn [\n  {\n    json: {\n      jobs: jobs\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f73b1925-4cea-44bd-9c37-bb9e93ca0a15",
+      "name": "Combine Jobs"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.creatomate.com/v2/renders",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"template_id\": \"5a0f37b7-9733-45fc-9c2d-30bc3630168f\",\n  \"modifications\": {\n    \"Video.source\": \"https://creatomate.com/files/assets/7347c3b7-e1a8-4439-96f1-f3dfc95c3d28\",\n    \"Text-1.text\": \"{{ $json.jobs[0] }}\",\n    \"Text-2.text\": \"{{ $json.jobs[1] }}\",\n    \"Text-3.text\": \"{{ $json.jobs[2] }}\",\n    \"Text-4.text\": \"{{ $json.jobs[3] }}\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d09a9079-658a-4419-876e-344354029b83",
+      "name": "Generate Real Video",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "99qISZRIt2evfJok",
+          "name": "Header Auth account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "START BUTTON": {
+      "main": [
+        [
+          {
+            "node": "Input Parameters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Input Parameters": {
+      "main": [
+        [
+          {
+            "node": "Get Job Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Job Data": {
+      "main": [
+        [
+          {
+            "node": "Convert Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Script Generator": {
+      "main": [
+        [
+          {
+            "node": "Prepare Video Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Jobs": {
+      "main": [
+        [
+          {
+            "node": "Script Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Video Data": {
+      "main": [
+        [
+          {
+            "node": "Generate Image",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Combine Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Image": {
+      "main": [
+        [
+          {
+            "node": "Save Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Image": {
+      "main": [
+        [
+          {
+            "node": "Final Video Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Jobs": {
+      "main": [
+        [
+          {
+            "node": "Generate Real Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Real Video": {
+      "main": [
+        [
+          {
+            "node": "Check Video Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "fec91c49-de42-4e4b-9d92-920ae28b5218",
+  "meta": {
+    "instanceId": "f6404e3f2ec3e50d9cef61df05b529ae2a74e9c6c1ef9a5479cb77067027b922"
+  },
+  "nodeGroups": [],
+  "id": "Njy4QyStvIfCjx6G",
+  "tags": []
+}
